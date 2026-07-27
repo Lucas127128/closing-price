@@ -73,6 +73,7 @@
     justify-content: center;
   }
   button {
+    font-size: 1em;
     color: white;
     background-color: inherit;
     cursor: pointer;
