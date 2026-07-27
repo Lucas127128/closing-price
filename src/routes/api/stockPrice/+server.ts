@@ -37,6 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': 'attachment; filename="closingPrice.xlsx"',
+      'Cache-Control': 'public, max-age=300',
     },
   });
 };
