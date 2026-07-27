@@ -2,7 +2,6 @@ import { error, type RequestHandler } from '@sveltejs/kit';
 import { ArkErrors, type } from 'arktype';
 import { getCurrentStockPrice } from '$lib/server/stock';
 import ExcelJS from 'exceljs';
-import pThrottle from 'p-throttle';
 
 const SymbolSchema = type({
   quote: 'string >= 7',
@@ -19,11 +18,9 @@ export const POST: RequestHandler = async ({ request }) => {
     });
   }
 
-  const throttle = pThrottle({ limit: 1, interval: 150 });
-  const throttledGetCurrentStockPrice = throttle(getCurrentStockPrice);
   const prices = await Promise.all(
     symbols.map(async (symbol) => {
-      return throttledGetCurrentStockPrice(symbol.quote, symbol.name);
+      return getCurrentStockPrice(symbol.quote, symbol.name);
     }),
   );
   const workbook = new ExcelJS.Workbook();

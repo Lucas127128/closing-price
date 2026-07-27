@@ -16,7 +16,6 @@
     "arktype": "^2.2.3",
     "daisyui": "^5.7.4",
     "exceljs": "^4.4.0",
-    "p-throttle": "^8.1.0",
     "tailwindcss": "^4.3.3",
     "yahoo-finance2": "^4.0.0"
   },

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Loader from '$lib/components/Loader.svelte';
   import { getQuotes } from './stock.remote';
   const quotes = await getQuotes();
   let fetching = $state(true);
@@ -42,7 +41,7 @@
         ></a
       >
     {:else}
-      <Loader />
+      <span class="loading loading-spinner loading-md"></span>
     {/if}
   </div>
 
