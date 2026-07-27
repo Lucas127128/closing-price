@@ -9,8 +9,8 @@ export const getCurrentStockPrice = async (
   symbol: string,
   name: number,
 ) => {
-  const { ask } = await client.quoteCombine(symbol);
-  const output = PriceSchema(ask);
+  const { regularMarketPrice } = await client.quoteCombine(symbol);
+  const output = PriceSchema(regularMarketPrice);
   if (output instanceof ArkErrors) {
     return error(500, { message: 'external service error' });
   } else {
