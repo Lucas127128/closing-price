@@ -10,6 +10,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      - name: Cache
+        uses: actions/cache@v6
+        with: 
+          key: ${{ runner.os  }}-key
+          path: |
+            .svelte-kit/**/*
+            node_modules/**/*
       - name: Install bun
         uses: oven-sh/setup-bun@v2
       - name: Install dependency
