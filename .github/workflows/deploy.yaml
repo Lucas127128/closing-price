@@ -25,6 +25,7 @@ jobs:
         run: bun run build
         env:
           CAP_JS_SECRET: ${{ secrets.CAP_JS_SECRET }}
+          CF_WEB_ANALYTICS_TOKEN: ${{ secrets.CF_WEB_ANALYTICS_TOKEN }}
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
