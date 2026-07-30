@@ -10,7 +10,6 @@ export async function POST({ request, platform }) {
         if (!platform) return false;
         const { CAP_JS_KV } = platform.env;
         const key = `cap:${sigHex}`;
-        console.log(ttlMs);
         if (await CAP_JS_KV.get(key)) return false;
         await CAP_JS_KV.put(key, '1', {
           expirationTtl: Math.ceil(ttlMs / 1000),

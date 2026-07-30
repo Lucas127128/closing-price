@@ -8,8 +8,10 @@ import {
   safeParse,
   string,
 } from 'valibot';
-import { getCurrentStockPrice } from '$lib/server/stock';
+import { getCurrentStockPrices } from '$lib/server/stock';
 import ExcelJS from 'exceljs';
+import { format } from 'date-fns';
+import { TZDate } from '@date-fns/tz';
 
 const SymbolSchema = array(
   object({
@@ -18,7 +20,7 @@ const SymbolSchema = array(
   }),
 );
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, platform }) => {
   const body = await request.json();
   const {
     output: symbols,
@@ -32,20 +34,30 @@ export const POST: RequestHandler = async ({ request }) => {
     });
   }
 
-  const prices = await Promise.all(
-    symbols.map(async (symbol) => {
-      return getCurrentStockPrice(symbol.quote, symbol.name);
-    }),
+  const prices = await getCurrentStockPrices(
+    symbols.map((symbol) => ({ symbol: symbol.quote, name: symbol.name })),
   );
+  const timeZone =
+    platform?.cf?.timezone ??
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = new TZDate().withTimeZone(timeZone);
+  const time = format(date, 'yyyy-MM-dd HH:mm:ss');
+
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet('Closing price');
   sheet.columns = [
-    { header: 'symbol', key: 'symbol', width: 15 },
-    { header: 'price', key: 'price', width: 15 },
+    { header: 'symbol', key: 'symbol' },
+    { header: 'price', key: 'price' },
+    { header: 'time', key: 'time', width: 20 },
   ];
+  sheet.addRow({ time });
   sheet.addRows(
-    prices.map((price) => ({ symbol: price.name, price: price.price })),
+    prices.map((price) => ({
+      symbol: price.name,
+      price: price.price,
+    })),
   );
+
   return new Response(new Uint8Array(await workbook.xlsx.writeBuffer()), {
     headers: {
       'Content-Type':

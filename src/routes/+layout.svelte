@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { CF_WEB_ANALYTICS_TOKEN } from '$app/env/public';
   import favicon from '$lib/assets/favicon.svg';
   import '../app.css';
 
   let { children } = $props();
-  const cfBeacon = { token: 'f645554b80b243e58e72fa04955e2de6' };
+  const cfBeacon = { token: CF_WEB_ANALYTICS_TOKEN };
 </script>
 
 <svelte:head>
