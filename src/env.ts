@@ -1,6 +1,6 @@
 import { defineEnvVars } from '@sveltejs/kit/env';
-import { type } from 'arktype';
+import { string, pipe, minLength } from 'valibot';
 
 export const variables = defineEnvVars({
-  CAP_JS_SECRET: { schema: type('string >= 64'), static: true },
+  CAP_JS_SECRET: { schema: pipe(string(), minLength(64)), static: true },
 });

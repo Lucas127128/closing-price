@@ -1,20 +1,34 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import { ArkErrors, type } from 'arktype';
+import {
+  array,
+  minLength,
+  number,
+  object,
+  pipe,
+  safeParse,
+  string,
+} from 'valibot';
 import { getCurrentStockPrice } from '$lib/server/stock';
 import ExcelJS from 'exceljs';
 
-const SymbolSchema = type({
-  quote: 'string >= 7',
-  name: 'number',
-}).array();
+const SymbolSchema = array(
+  object({
+    quote: pipe(string(), minLength(7)),
+    name: number(),
+  }),
+);
 
 export const POST: RequestHandler = async ({ request }) => {
   const body = await request.json();
-  const symbols = SymbolSchema(body);
-  if (symbols instanceof ArkErrors) {
-    console.log(symbols);
+  const {
+    output: symbols,
+    success,
+    issues,
+  } = safeParse(SymbolSchema, body);
+  if (!success) {
+    console.log(issues);
     return error(422, {
-      message: `Invalid symbol: ${symbols[0].problem}`,
+      message: `Invalid symbol: ${issues[0].message}`,
     });
   }
 

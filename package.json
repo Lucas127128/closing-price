@@ -13,12 +13,12 @@
     "lint": "oxlint"
   },
   "dependencies": {
-    "arktype": "^2.2.3",
     "cap-widget": "^0.1.56",
     "capjs-core": "^0.1.1",
     "daisyui": "^5.7.4",
     "exceljs": "^4.4.0",
     "tailwindcss": "^4.3.3",
+    "valibot": "^1.4.2",
     "yahoo-finance2": "^4.0.0"
   },
   "devDependencies": {
