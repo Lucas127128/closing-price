@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "wrangler dev .svelte-kit/cloudflare/_worker.js",
     "sync": "svelte-kit sync || echo ''",
     "check": "bun sync && svelte-check --tsconfig ./tsconfig.json",
     "fmt": "oxfmt",
@@ -14,12 +14,15 @@
   },
   "dependencies": {
     "arktype": "^2.2.3",
+    "cap-widget": "^0.1.56",
+    "capjs-core": "^0.1.1",
     "daisyui": "^5.7.4",
     "exceljs": "^4.4.0",
     "tailwindcss": "^4.3.3",
     "yahoo-finance2": "^4.0.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260730.1",
     "@sveltejs/adapter-cloudflare": "^7.2.9",
     "@sveltejs/kit": "^2.70.1",
     "@tailwindcss/vite": "^4.3.3",

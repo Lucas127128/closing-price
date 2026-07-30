@@ -1,20 +1,32 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { getQuotes } from './stock.remote';
+  import Cap from 'cap-widget';
+
+  let isBot = $state<'validating' | 'true' | 'false'>('validating');
+  onMount(async () => {
+    const cap = new Cap({ apiEndpoint: '/api/cap' });
+    const { token, success } = await cap.solve();
+    isBot = success ? 'false' : 'true';
+  });
+
   const quotes = await getQuotes();
   let fetching = $state(true);
+
   $effect(() => {
-    fetch('/api/stockPrice', {
-      method: 'POST',
-      body: JSON.stringify(quotes),
-    })
-      .then((response) => {
-        return response.arrayBuffer();
+    if (isBot === 'false')
+      fetch('/api/stockPrice', {
+        method: 'POST',
+        body: JSON.stringify(quotes),
       })
-      .then((buffer) => {
-        url = URL.createObjectURL(new Blob([buffer]));
-        fetching = false;
-      })
-      .catch((err) => console.error(err));
+        .then((response) => {
+          return response.arrayBuffer();
+        })
+        .then((buffer) => {
+          url = URL.createObjectURL(new Blob([buffer]));
+          fetching = false;
+        })
+        .catch((err) => console.error(err));
   });
 
   let url = $state<string>('');
@@ -25,7 +37,13 @@
 <h1>Closing Price Generator</h1>
 <main>
   <div>
-    {#if !fetching}
+    {#if fetching}
+      <span class="loading loading-spinner loading-md"></span>
+    {:else if isBot === 'true'}
+      <p>
+        You are detected as bot. Please <a href="/">reload</a> to try again
+      </p>
+    {:else}
       <a href={url} download="closing-price.xlsx"
         ><button
           onclick={() => {
@@ -40,8 +58,6 @@
           }}>{buttonText}</button
         ></a
       >
-    {:else}
-      <span class="loading loading-spinner loading-md"></span>
     {/if}
   </div>
 

@@ -1,12 +1,22 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import favicon from '$lib/assets/favicon.svg';
   import '../app.css';
 
   let { children } = $props();
+  const cfBeacon = { token: 'f645554b80b243e58e72fa04955e2de6' };
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
+  {#if page.url.hostname !== 'localhost'}
+    <script
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify(cfBeacon)}
+      async
+    ></script>
+  {/if}
 </svelte:head>
 
 <div>

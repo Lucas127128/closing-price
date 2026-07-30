@@ -25,4 +25,7 @@
   "cache": {
     "enabled": true,
   },
+  "kv_namespaces": [
+    {"binding": "CAP_JS_KV", "id": "capjs-kv-id"}
+  ],
 }
