@@ -23,6 +23,7 @@ export default defineConfig({
         remoteFunctions: true,
         handleRenderingErrors: true,
         forkPreloads: true,
+        explicitEnvironmentVariables: true,
       },
     }),
   ],

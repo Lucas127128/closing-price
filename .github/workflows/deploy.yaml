@@ -23,6 +23,8 @@ jobs:
         run: bun i --frozen-lockfile
       - name: Build app
         run: bun run build
+        env:
+          CAP_JS_SECRET: ${{ secrets.CAP_JS_SECRET }}
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
