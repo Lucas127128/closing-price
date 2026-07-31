@@ -11,6 +11,8 @@
   "placement": {
     "mode": "smart",
   },
+  "preview_urls": true,
+  "minify": true,
   "observability": {
     "logs": {
       "enabled": true,
