@@ -19,11 +19,9 @@
         method: 'POST',
         body: JSON.stringify(quotes),
       })
-        .then((response) => {
-          return response.arrayBuffer();
-        })
-        .then((buffer) => {
-          url = URL.createObjectURL(new Blob([buffer]));
+        .then((response) => response.blob())
+        .then((blob) => {
+          url = URL.createObjectURL(blob);
           fetching = false;
         })
         .catch((err) => console.error(err));

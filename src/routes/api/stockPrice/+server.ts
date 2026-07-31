@@ -9,9 +9,9 @@ import {
   string,
 } from 'valibot';
 import { getCurrentStockPrices } from '$lib/server/stock';
-import ExcelJS from 'exceljs';
+import writeExcelFile from 'write-excel-file/universal';
 import { format } from 'date-fns';
-import { TZDate } from '@date-fns/tz';
+import { TZDateMini } from '@date-fns/tz';
 
 const SymbolSchema = array(
   object({
@@ -40,25 +40,24 @@ export const POST: RequestHandler = async ({ request, platform }) => {
   const timeZone =
     platform?.cf?.timezone ??
     Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const date = new TZDate().withTimeZone(timeZone);
+  const date = new TZDateMini().withTimeZone(timeZone);
   const time = format(date, 'yyyy-MM-dd HH:mm:ss');
 
-  const workbook = new ExcelJS.Workbook();
-  const sheet = workbook.addWorksheet('Closing price');
-  sheet.columns = [
-    { header: 'symbol', key: 'symbol' },
-    { header: 'price', key: 'price' },
-    { header: 'time', key: 'time', width: 20 },
-  ];
-  sheet.addRow({ time });
-  sheet.addRows(
-    prices.map((price) => ({
-      symbol: price.name,
-      price: price.price,
-    })),
-  );
+  const data = prices.map((price, index) => {
+    if (index === 0) {
+      return [price.name, price.price, time];
+    } else {
+      return [price.name, price.price];
+    }
+  });
+  data.unshift(['symbol', 'price', 'time']);
+  const blob = await writeExcelFile([
+    {
+      data,
+    },
+  ]).toBlob();
 
-  return new Response(new Uint8Array(await workbook.xlsx.writeBuffer()), {
+  return new Response(blob, {
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
