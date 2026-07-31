@@ -10,7 +10,8 @@
     "sync": "svelte-kit sync || echo ''",
     "check": "bun sync && svelte-check --tsconfig ./tsconfig.json",
     "fmt": "oxfmt",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer  output-check"
   },
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
@@ -20,14 +21,14 @@
     "date-fns": "^4.4.0",
     "exceljs": "^4.4.0",
     "tailwindcss": "^4.3.3",
-    "valibot": "^1.4.2",
-    "yahoo-finance2": "^4.0.0"
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260730.1",
     "@sveltejs/adapter-cloudflare": "^7.2.9",
     "@sveltejs/kit": "^2.70.1",
     "@tailwindcss/vite": "^4.3.3",
+    "bundle-analyzer": "^0.0.6",
     "eslint-plugin-svelte": "^3.22.0",
     "oxfmt": "^0.61.0",
     "oxlint": "^1.76.0",
