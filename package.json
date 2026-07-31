@@ -17,6 +17,7 @@
     "@date-fns/tz": "^1.5.0",
     "cap-widget": "^0.1.56",
     "capjs-core": "^0.1.1",
+    "comptime": "^0.1.0",
     "daisyui": "^5.7.4",
     "date-fns": "^4.4.0",
     "tailwindcss": "^4.3.3",

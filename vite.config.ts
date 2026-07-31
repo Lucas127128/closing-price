@@ -2,12 +2,14 @@ import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { comptime } from 'comptime/vite';
 
 export default defineConfig({
   css: {
     transformer: 'lightningcss',
   },
   plugins: [
+    comptime(),
     tailwindcss({ optimize: true }),
     sveltekit({
       compilerOptions: {
