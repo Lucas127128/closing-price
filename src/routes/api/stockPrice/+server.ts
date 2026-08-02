@@ -21,12 +21,11 @@ const SymbolSchema = array(
 );
 
 export const POST: RequestHandler = async ({ request, platform }) => {
-  const body = await request.json();
   const {
     output: symbols,
     success,
     issues,
-  } = safeParse(SymbolSchema, body);
+  } = safeParse(SymbolSchema, await request.json());
   if (!success) {
     console.log(issues);
     return error(422, {

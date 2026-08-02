@@ -11,8 +11,8 @@ const QUOTE_URL = 'https://query2.finance.yahoo.com/v7/finance/quote';
 let cookies = new Map<string, string>();
 let crumb: string | undefined;
 
-const sleep = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = async (ms: number) =>
+  await new Promise((resolve) => setTimeout(resolve, ms));
 
 const cookieHeader = () =>
   [...cookies].map(([key, value]) => `${key}=${value}`).join('; ');
@@ -21,9 +21,7 @@ function extractCookies(headers: Headers): void {
   const withGetSetCookie = headers as Headers & {
     getSetCookie?: () => string[];
   };
-  const raw = withGetSetCookie.getSetCookie?.() ?? [
-    headers.get('set-cookie'),
-  ];
+  const raw = withGetSetCookie.getSetCookie();
   for (const header of raw.filter(Boolean)) {
     for (const part of header.split(',')) {
       const pair = part.trim().split(';')[0];
@@ -48,13 +46,13 @@ async function acquireCookies(): Promise<void> {
     });
     extractCookies(res.headers);
     const location = res.headers.get('location');
-    if (!location) return;
+    if (location === null) return;
     url = new URL(location, url).toString();
   }
 }
 
 async function getCrumb(): Promise<string> {
-  if (crumb) return crumb;
+  if (crumb !== undefined) return crumb;
   for (let attempt = 0; attempt < 6; attempt++) {
     if (attempt > 0) await sleep(1500 * attempt);
     const res = await fetch(CRUMB_URL, {

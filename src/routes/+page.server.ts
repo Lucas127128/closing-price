@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ setHeaders }) => {
+export const load: PageServerLoad = ({ setHeaders }) => {
   setHeaders({
     'Cache-Control': 'public, max-age=300, s-maxage=600',
   });

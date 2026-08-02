@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "bunx -b vite dev",
     "build": "vite build",
     "preview": "wrangler dev .svelte-kit/cloudflare/_worker.js",
     "sync": "svelte-kit sync || echo ''",
