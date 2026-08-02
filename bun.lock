@@ -12,6 +12,7 @@
         "daisyui": "^5.7.13",
         "date-fns": "^4.4.0",
         "tailwindcss": "^4.3.3",
+        "temporal-polyfill-lite": "^0.4.2",
         "valibot": "^1.4.2",
         "write-excel-file": "^4.1.1",
       },
@@ -957,6 +958,8 @@
     "tailwindcss": ["tailwindcss@4.3.3", "", {}, "sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ=="],
 
     "tapable": ["tapable@2.3.3", "", {}, "sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A=="],
+
+    "temporal-polyfill-lite": ["temporal-polyfill-lite@0.4.2", "", {}, "sha512-AguA4sTLtAnpoJ62dk/kjssR5Tt1JmodrjS4r1o9IDkmxWJsqLJNsyicAZTpMY/Dt5AKF1tbkL9P84wGsXPhAQ=="],
 
     "tinybench": ["tinybench@2.9.0", "", {}, "sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg=="],
 

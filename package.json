@@ -22,6 +22,7 @@
     "daisyui": "^5.7.13",
     "date-fns": "^4.4.0",
     "tailwindcss": "^4.3.3",
+    "temporal-polyfill-lite": "^0.4.2",
     "valibot": "^1.4.2",
     "write-excel-file": "^4.1.1"
   },
