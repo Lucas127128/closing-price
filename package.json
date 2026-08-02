@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "wrangler dev .svelte-kit/cloudflare/_worker.js",
     "sync": "svelte-kit sync || echo ''",
-    "check": "bun sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "bun sync && svelte-check --tsconfig ./tsconfig.json && bun lint",
     "fmt": "oxfmt",
     "lint": "oxlint",
     "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer output-check",
@@ -19,16 +19,16 @@
     "cap-widget": "^0.1.56",
     "capjs-core": "^0.1.1",
     "comptime": "^0.1.0",
-    "daisyui": "^5.7.4",
+    "daisyui": "^5.7.13",
     "date-fns": "^4.4.0",
     "tailwindcss": "^4.3.3",
     "valibot": "^1.4.2",
     "write-excel-file": "^4.1.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260730.1",
+    "@cloudflare/workers-types": "^5.20260801.1",
     "@sveltejs/adapter-cloudflare": "^7.2.9",
-    "@sveltejs/kit": "^2.70.1",
+    "@sveltejs/kit": "^2.70.2",
     "@tailwindcss/vite": "^4.3.3",
     "bundle-analyzer": "^0.0.6",
     "eslint-plugin-svelte": "^3.22.0",
@@ -38,7 +38,7 @@
     "svelte": "^5.56.8",
     "svelte-check": "^4.7.4",
     "typescript": "^6.0.1",
-    "vite": "^8.1.5",
+    "vite": "^8.2.0",
     "vitest": "^4.1.10"
   },
   "packageManager": "bun@1.3.14"

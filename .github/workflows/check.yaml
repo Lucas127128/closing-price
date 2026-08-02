@@ -1,8 +1,8 @@
-name: lint
+name: Check
 on: [push]
 jobs:
-  lint:
-    name: lint
+  check:
+    name: check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,5 +20,5 @@ jobs:
         run: bun i --frozen-lockfile
       - name: Sync types
         run: bun sync
-      - name: Lint
-        run: bun lint
+      - name: Check
+        run: bun check
