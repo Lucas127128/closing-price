@@ -28,6 +28,6 @@
     "enabled": true,
   },
   "kv_namespaces": [
-    {"binding": "CAP_JS_KV", "id": "0bc1c228a8b24c44a8baf87ef6f04fcc"}
+    { "binding": "CAP_JS_KV", "id": "0bc1c228a8b24c44a8baf87ef6f04fcc" },
   ],
 }

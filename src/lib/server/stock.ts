@@ -11,7 +11,8 @@ const QUOTE_URL = 'https://query2.finance.yahoo.com/v7/finance/quote';
 let cookies = new Map<string, string>();
 let crumb: string | undefined;
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 const cookieHeader = () =>
   [...cookies].map(([key, value]) => `${key}=${value}`).join('; ');
@@ -27,7 +28,8 @@ function extractCookies(headers: Headers): void {
     for (const part of header.split(',')) {
       const pair = part.trim().split(';')[0];
       const sep = pair.indexOf('=');
-      if (sep > 0) cookies.set(pair.slice(0, sep).trim(), pair.slice(sep + 1).trim());
+      if (sep > 0)
+        cookies.set(pair.slice(0, sep).trim(), pair.slice(sep + 1).trim());
     }
   }
 }
@@ -97,13 +99,14 @@ export const getCurrentStockPrices = async (
     }
 
     const { quoteResponse } = (await response.json()) as {
-      quoteResponse?: { result?: { symbol: string; regularMarketPrice?: number }[] };
+      quoteResponse?: {
+        result?: { symbol: string; regularMarketPrice?: number }[];
+      };
     };
     const priceBySymbol = new Map(
-      (quoteResponse?.result ?? []).map(({ symbol, regularMarketPrice }) => [
-        symbol,
-        regularMarketPrice,
-      ]),
+      (quoteResponse?.result ?? []).map(
+        ({ symbol, regularMarketPrice }) => [symbol, regularMarketPrice],
+      ),
     );
     const prices = stocks.map(({ symbol, name }) => ({
       price: priceBySymbol.get(symbol),
