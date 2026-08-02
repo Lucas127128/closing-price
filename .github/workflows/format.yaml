@@ -1,8 +1,8 @@
-name: lint
+name: format
 on: [push]
 jobs:
   lint:
-    name: lint
+    name: format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
