@@ -11,7 +11,8 @@
     "check": "bun sync && svelte-check --tsconfig ./tsconfig.json",
     "fmt": "oxfmt",
     "lint": "oxlint",
-    "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer output-check"
+    "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer output-check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
@@ -31,6 +32,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "bundle-analyzer": "^0.0.6",
     "eslint-plugin-svelte": "^3.22.0",
+    "husky": "^9.1.7",
     "oxfmt": "^0.61.0",
     "oxlint": "^1.76.0",
     "svelte": "^5.56.8",
