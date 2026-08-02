@@ -27,12 +27,6 @@
   "cache": {
     "enabled": true,
   },
-  "kv_namespaces": [
-    {
-      "binding": "CAP_JS_KV",
-      "id": "0bc1c228a8b24c44a8baf87ef6f04fcc",
-    },
-  ],
   "d1_databases": [
     {
       "binding": "CAP_JS_D1",

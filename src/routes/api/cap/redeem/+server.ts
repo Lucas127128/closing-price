@@ -16,12 +16,11 @@ export const POST: RequestHandler = async ({ request, platform }) => {
             seconds: Math.ceil(ttlMs / 1000),
           })
           .toJSON();
+        const insertQuery = CAP_JS_D1.prepare(
+          'INSERT INTO cap_nonces (sig, expires_at) VALUES (?, ?)',
+        );
         try {
-          await CAP_JS_D1.prepare(
-            'INSERT INTO cap_nonces (sig, expires_at) VALUES (?, ?)',
-          )
-            .bind(sigHex, expiresTime)
-            .run();
+          await insertQuery.bind(sigHex, expiresTime).run();
           return true;
         } catch {
           // sigHex is not unique

@@ -1,4 +1,4 @@
-import type { KVNamespace, D1Database } from '@cloudflare/workers-types';
+import type { D1Database } from '@cloudflare/workers-types';
 
 declare global {
   namespace App {
@@ -8,7 +8,6 @@ declare global {
     // interface PageState {}
     interface Platform {
       env: {
-        CAP_JS_KV: KVNamespace;
         CAP_JS_D1: D1Database;
       };
     }
