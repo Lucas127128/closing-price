@@ -10,8 +10,7 @@ import {
 } from 'valibot';
 import { getCurrentStockPrices } from '$lib/server/stock';
 import writeExcelFile from 'write-excel-file/universal';
-import { format } from 'date-fns';
-import { TZDateMini } from '@date-fns/tz';
+import { Temporal } from 'temporal-polyfill-lite';
 
 const SymbolSchema = array(
   object({
@@ -39,8 +38,16 @@ export const POST: RequestHandler = async ({ request, platform }) => {
   const timeZone =
     platform?.cf?.timezone ??
     Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const date = new TZDateMini().withTimeZone(timeZone);
-  const time = format(date, 'yyyy-MM-dd HH:mm:ss');
+  const date = Temporal.Now.zonedDateTimeISO().withTimeZone(timeZone);
+  const time = date.toLocaleString('en-US', {
+    hour12: false,
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
 
   const data = prices.map((price, index) => {
     if (index === 0) {
