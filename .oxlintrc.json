@@ -5,7 +5,7 @@
   "categories": {
     "correctness": "error"
   },
-  "options": {"typeAware": true, "typeCheck": true},
+  "options": { "typeAware": true, "typeCheck": true },
   "rules": {
     "svelte/infinite-reactive-loop": "error",
     "svelte/no-bind-value-on-checkable-inputs": "error",
@@ -80,10 +80,10 @@
     "typescript/return-await": ["error", "always"],
     "typescript/strict-boolean-expressions": [
       "error",
-      { "allowNullableBoolean": true },
+      { "allowNullableBoolean": true }
     ],
     "typescript/switch-exhaustiveness-check": "error",
-    "typescript/use-unknown-in-catch-callback-variable": "error",
+    "typescript/use-unknown-in-catch-callback-variable": "error"
   },
   "env": {
     "builtin": true
