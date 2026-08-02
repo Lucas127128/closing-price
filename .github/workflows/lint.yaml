@@ -18,5 +18,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
       - name: Install dependency
         run: bun i --frozen-lockfile
+      - name: Sync types
+        run: bun sync
       - name: Lint
         run: bun lint

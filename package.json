@@ -11,7 +11,7 @@
     "check": "bun sync && svelte-check --tsconfig ./tsconfig.json",
     "fmt": "oxfmt",
     "lint": "oxlint",
-    "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer  output-check"
+    "check-build": "wrangler deploy --dry-run --outdir output-check && bundle-analyzer output-check"
   },
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
