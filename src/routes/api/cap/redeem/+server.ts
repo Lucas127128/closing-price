@@ -15,10 +15,14 @@ export const POST: RequestHandler = async ({ request, platform }) => {
           .add({
             seconds: Math.ceil(ttlMs / 1000),
           })
+          .withTimeZone('UTC')
+          .toPlainDateTime()
           .toJSON();
+        console.log(expiresTime);
         const insertQuery = CAP_JS_D1.prepare(
           'INSERT INTO cap_nonces (sig, expires_at) VALUES (?, ?)',
         );
+
         try {
           await insertQuery.bind(sigHex, expiresTime).run();
           return true;
