@@ -8,7 +8,7 @@ const USER_AGENT = 'Mozilla/5.0 (compatible; closing-price/1.0)';
 const CRUMB_URL = 'https://query1.finance.yahoo.com/v1/test/getcrumb';
 const QUOTE_URL = 'https://query2.finance.yahoo.com/v7/finance/quote';
 
-let cookies = new Map<string, string>();
+const cookies = new Map<string, string>();
 let crumb: string | undefined;
 
 const sleep = async (ms: number) =>

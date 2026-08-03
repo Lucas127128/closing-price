@@ -4,7 +4,7 @@
   import favicon from '$lib/assets/favicon.svg';
   import '../app.css';
 
-  let { children } = $props();
+  const { children } = $props();
   const cfBeacon = { token: CF_WEB_ANALYTICS_TOKEN };
 </script>
 

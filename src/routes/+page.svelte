@@ -32,8 +32,18 @@
   });
 
   let url = $state<string>('');
-  let buttonText = $state<string>('Download Spreadsheet');
-  let showLink = $state<boolean>(false);
+  let buttonText = $state('Download Spreadsheet');
+  let showLink = $state(false);
+  const downloadOnClick = () => {
+    setTimeout(() => {
+      showLink = true;
+      buttonText = '✅ Download Successfully';
+    }, 150);
+    setTimeout(() => {
+      showLink = false;
+      buttonText = 'Download Spreadsheet';
+    }, 6000);
+  };
 </script>
 
 <h1>Closing Price Generator</h1>
@@ -47,18 +57,7 @@
       </p>
     {:else}
       <a href={url} download="closing-price.xlsx"
-        ><button
-          onclick={() => {
-            setTimeout(() => {
-              showLink = true;
-              buttonText = '✅ Download Successfully';
-            }, 150);
-            setTimeout(() => {
-              showLink = false;
-              buttonText = 'Download Spreadsheet';
-            }, 6000);
-          }}>{buttonText}</button
-        ></a
+        ><button onclick={downloadOnClick}>{buttonText}</button></a
       >
     {/if}
   </div>
