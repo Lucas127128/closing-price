@@ -2,10 +2,14 @@
   import { onMount } from 'svelte';
   import { getQuotes } from './stock.remote';
   import Cap from 'cap-widget';
+  import { cleanupDB } from './cleanup.remote';
 
   let isBot = $state<'validating' | 'true' | 'false'>('validating');
   onMount(async () => {
     const cap = new Cap({ apiEndpoint: '/api/cap' });
+    Promise.resolve()
+      .then(() => cleanupDB())
+      .catch((err) => console.error(err));
     const { token, success } = await cap.solve();
     isBot = success ? 'false' : 'true';
   });

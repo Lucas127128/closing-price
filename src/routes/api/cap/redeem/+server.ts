@@ -18,7 +18,6 @@ export const POST: RequestHandler = async ({ request, platform }) => {
           .withTimeZone('UTC')
           .toPlainDateTime()
           .toJSON();
-        console.log(expiresTime);
         const insertQuery = CAP_JS_D1.prepare(
           'INSERT INTO cap_nonces (sig, expires_at) VALUES (?, ?)',
         );
