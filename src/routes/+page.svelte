@@ -3,6 +3,7 @@
   import { getQuotes } from './stock.remote';
   import Cap from 'cap-widget';
   import { cleanupDB } from './cleanup.remote';
+  import Button from '$lib/Button.svelte';
 
   let isBot = $state<'validating' | 'true' | 'false'>('validating');
   onMount(async () => {
@@ -46,9 +47,11 @@
   };
 </script>
 
-<h1>Closing Price Generator</h1>
-<main>
-  <div>
+<h1 class="text-white font-extrabold justify-self-center">
+  Closing Price Generator
+</h1>
+<main class="grid place-content-center grid-rows-[3em_1fr] p-4 gap-4">
+  <div class="flex justify-center">
     {#if fetching}
       <span class="loading loading-spinner loading-md"></span>
     {:else if isBot === 'true'}
@@ -56,65 +59,21 @@
         You are detected as bot. Please <a href="/">reload</a> to try again
       </p>
     {:else}
-      <a href={url} download="closing-price.xlsx"
-        ><button onclick={downloadOnClick}>{buttonText}</button></a
+      <a href={url} download="closing-price.xlsx" class="text-white"
+        ><Button {downloadOnClick} {buttonText} /></a
       >
     {/if}
   </div>
 
-  <div>
+  <div class="flex justify-center">
     {#if showLink}
-      <p>
-        press <a href={url} download="closing-price.xlsx">here</a> if download
-        doesn't start automatically
+      <p class="text-white">
+        press <a
+          href={url}
+          download="closing-price.xlsx"
+          class="text-white underline decoration-white">here</a
+        > if download doesn't start automatically
       </p>
     {/if}
   </div>
 </main>
-
-<style>
-  h1 {
-    color: white;
-    font-weight: 800;
-    justify-self: center;
-  }
-  main {
-    display: grid;
-    place-content: center;
-    grid-template-rows: 3em 1fr;
-    padding: 1em;
-    gap: 1em;
-  }
-  div {
-    display: flex;
-    justify-content: center;
-  }
-  button {
-    font-size: 1em;
-    color: white;
-    background-color: inherit;
-    cursor: pointer;
-    border: 3px solid rgb(66, 245, 179);
-    border-radius: 0.7em;
-    overflow: hidden;
-    padding: 0.8em;
-    transition:
-      transform 0.3s ease,
-      border 0.2s ease;
-  }
-  button:hover {
-    transform: perspective(350px) translateZ(20px);
-    border: 4px solid rgb(66, 245, 179);
-  }
-  a {
-    text-decoration: none;
-    color: white;
-  }
-  p {
-    color: white;
-    a {
-      text-decoration: underline;
-      color: white;
-    }
-  }
-</style>

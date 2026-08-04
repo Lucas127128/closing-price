@@ -20,23 +20,15 @@
   {/if}
 </svelte:head>
 
-<div>
+<div
+  class="font-[Arial,sans-serif] grid bg-[rgb(22,23,29)] grid-rows-[4em_calc(100dvh-4em)] gap-4 h-dvh p-4"
+>
   {@render children()}
 </div>
 
 <style>
   :global(body) {
-    font-family: Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 0;
-  }
-  div {
-    display: grid;
-    background-color: rgb(22, 23, 29);
-    grid-template-rows: 4em calc(100dvh - 4em);
-    gap: 1em;
-    height: 100dvh;
-    margin: 0;
-    padding: 1em;
   }
 </style>
