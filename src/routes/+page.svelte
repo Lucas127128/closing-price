@@ -47,7 +47,9 @@
   };
 </script>
 
-<h1 class="text-white font-extrabold justify-self-center">
+<h1
+  class="text-white font-extrabold justify-self-center text-start text-3xl mt-6"
+>
   Closing Price Generator
 </h1>
 <main class="grid place-content-center grid-rows-[3em_1fr] p-4 gap-4">
