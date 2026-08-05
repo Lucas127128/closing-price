@@ -7,6 +7,6 @@
 
 <button
   onclick={downloadOnClick}
-  class="text-base text-white bg-inherit cursor-pointer border-[3px] hover:border-4 border-[rgb(66,245,179)] rounded-xl overflow-hidden p-[0.8em] transition-[transform_0.3s_ease,border_0.2s_ease] hover:transform-[perspective(350px)_translateZ(20px)]"
+  class="text-base text-white bg-inherit cursor-pointer border-[3px] border-emerald-300 rounded-xl overflow-hidden p-3 transition-[transform_0.3s_ease,border_0.2s_ease] hover:border-4 hover:transform-[perspective(350px)_translateZ(15px)]"
   >{buttonText}</button
 >

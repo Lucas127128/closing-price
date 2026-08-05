@@ -47,9 +47,7 @@
   };
 </script>
 
-<h1
-  class="text-white font-extrabold justify-self-center text-start text-3xl mt-6"
->
+<h1 class="text-white font-extrabold text-3xl mt-6">
   Closing Price Generator
 </h1>
 <main class="grid place-content-center grid-rows-[3em_1fr] p-4 gap-4">
@@ -58,7 +56,9 @@
       <span class="loading loading-spinner loading-md"></span>
     {:else if isBot === 'true'}
       <p>
-        You are detected as bot. Please <a href="/">reload</a> to try again
+        You are detected as bot. Please <a href="/" class="underline"
+          >reload</a
+        > to try again
       </p>
     {:else}
       <a href={url} download="closing-price.xlsx" class="text-white"
@@ -73,7 +73,7 @@
         press <a
           href={url}
           download="closing-price.xlsx"
-          class="text-white underline decoration-white">here</a
+          class="text-white underline">here</a
         > if download doesn't start automatically
       </p>
     {/if}
