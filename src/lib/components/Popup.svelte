@@ -23,16 +23,18 @@
   <h2 class="pb-4 text-2xl justify-self-center">
     Add a stock temporarily
   </h2>
-  <div class="grid grid-cols-[12em_1fr] grid-rows-[2.5em_2.5em] gap-4">
-    <span class="text-lg">Name (eg. 1)</span>
+  <div class="grid grid-cols-[4em_1fr] grid-rows-[2.5em_2.5em] gap-4">
+    <span class="text-lg self-center">Name</span>
     <input
       type="tel"
+      placeholder="1"
       class="pr-3 pl-3 border-accent border outline-none rounded-sm min-w-20"
       bind:value={stock.name}
     />
-    <span class="text-lg">Symbol (eg. 0001.HK)</span>
+    <span class="text-lg self-center">Symbol</span>
     <input
       type="text"
+      placeholder="0001.HK"
       class="pr-3 pl-3 border-accent border outline-none rounded-sm min-w-20"
       bind:value={stock.quote}
     />

@@ -3,9 +3,9 @@
   import { getQuotes } from './stock.remote';
   import Cap from 'cap-widget';
   import { cleanupDB } from './cleanup.remote';
-  import Button from '$lib/Button.svelte';
+  import Button from '$lib/components/Button.svelte';
   import { Settings } from '@lucide/svelte';
-  import Popup from '$lib/Popup.svelte';
+  import Popup from '$lib/components/Popup.svelte';
 
   let isBot = $state<'validating' | 'true' | 'false'>('validating');
   let loading = $state(true);

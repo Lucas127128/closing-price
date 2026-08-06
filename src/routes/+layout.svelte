@@ -10,6 +10,7 @@
 
 <svelte:head>
   <link rel="icon" href={favicon} />
+  <meta name="theme-color" content="#16171d" />
   {#if page.url.hostname !== 'localhost'}
     <script
       type="module"
@@ -21,7 +22,7 @@
 </svelte:head>
 
 <div
-  class="font-[Arial,sans-serif] grid bg-[rgb(22,23,29)] grid-rows-[2em_2em_calc(100dvh-4em)] grid-cols-[100dvw] justify-center gap-4 h-dvh p-4"
+  class="font-[Arial,sans-serif] grid bg-[#16171d] grid-rows-[2em_2em_calc(100dvh-4em)] grid-cols-[100dvw] justify-center gap-4 min-h-dvh p-4"
 >
   {@render children()}
 </div>
@@ -30,5 +31,8 @@
   :global(body) {
     padding: 0;
     margin: 0;
+  }
+  :global(html) {
+    background-color: #16171d;
   }
 </style>
