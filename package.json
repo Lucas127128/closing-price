@@ -20,10 +20,10 @@
     "capjs-core": "^0.1.1",
     "comptime": "^0.1.0",
     "daisyui": "^5.7.13",
+    "hucre": "^0.6.2",
     "tailwindcss": "^4.3.3",
     "temporal-polyfill-lite": "^0.4.2",
-    "valibot": "^1.4.2",
-    "write-excel-file": "^4.1.1"
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260801.1",

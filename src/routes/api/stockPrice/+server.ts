@@ -1,9 +1,9 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
 import { safeParse } from 'valibot';
 import { getCurrentStockPrices } from '$lib/server/stock';
-import writeExcelFile from 'write-excel-file/universal';
 import { Temporal } from 'temporal-polyfill-lite';
 import { SymbolsSchema } from '$lib/schema';
+import { writeCsv } from 'hucre/csv';
 
 export const POST: RequestHandler = async ({ request, platform }) => {
   const {
@@ -43,17 +43,11 @@ export const POST: RequestHandler = async ({ request, platform }) => {
     }
   });
   data.unshift(['symbol', 'price', 'time']);
-  const blob = await writeExcelFile([
-    {
-      data,
-    },
-  ]).toBlob();
+  const csv = writeCsv(data);
 
-  return new Response(blob, {
+  return new Response(csv, {
     headers: {
-      'Content-Type':
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': 'attachment; filename="closingPrice.xlsx"',
+      'Content-Type': 'text/csv',
     },
   });
 };

@@ -30,7 +30,8 @@
         method: 'POST',
         body: JSON.stringify(quotes),
       })
-        .then((response) => response.blob())
+        .then((response) => response.text())
+        .then((text) => new Blob([text]))
         .then((blob) => {
           url = URL.createObjectURL(blob);
           loading = false;
@@ -74,7 +75,7 @@
         > to try again
       </p>
     {:else}
-      <a href={url} download="closing-price.xlsx" class="text-white"
+      <a href={url} download="closing-price.csv" class="text-white"
         ><Button {downloadOnClick} {buttonText} /></a
       >
     {/if}
