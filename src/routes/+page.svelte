@@ -51,11 +51,12 @@
 </script>
 
 <button
-  popovertarget="settings"
+  commandfor="settings"
+  command="show-modal"
   class="justify-self-end pr-8 pt-2.5 cursor-pointer"
   ><Settings color="white" /></button
 >
-<Popup popupId="settings" bind:quotes />
+<Popup popupId="settings" bind:quotes bind:loading />
 
 <h1 class="text-white font-extrabold place-self-center text-3xl">
   Closing Price Generator
