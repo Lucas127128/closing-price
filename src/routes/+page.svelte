@@ -4,8 +4,17 @@
   import Cap from 'cap-widget';
   import { cleanupDB } from './cleanup.remote';
   import Button from '$lib/Button.svelte';
+  import { Settings } from '@lucide/svelte';
+  import Popup from '$lib/Popup.svelte';
 
   let isBot = $state<'validating' | 'true' | 'false'>('validating');
+  let loading = $state(true);
+  let url = $state<string>('');
+  let buttonText = $state('Download Spreadsheet');
+  let showLink = $state(false);
+  // eslint-disable-next-line
+  let quotes = $state(await getQuotes());
+
   onMount(async () => {
     const cap = new Cap({ apiEndpoint: '/api/cap' });
     Promise.resolve()
@@ -14,9 +23,6 @@
     const { token, success } = await cap.solve();
     isBot = success ? 'false' : 'true';
   });
-
-  const quotes = await getQuotes();
-  let fetching = $state(true);
 
   $effect(() => {
     if (isBot === 'false')
@@ -27,14 +33,11 @@
         .then((response) => response.blob())
         .then((blob) => {
           url = URL.createObjectURL(blob);
-          fetching = false;
+          loading = false;
         })
         .catch((err) => console.error(err));
   });
 
-  let url = $state<string>('');
-  let buttonText = $state('Download Spreadsheet');
-  let showLink = $state(false);
   const downloadOnClick = () => {
     setTimeout(() => {
       showLink = true;
@@ -47,12 +50,21 @@
   };
 </script>
 
-<h1 class="font-extrabold place-self-center text-3xl mt-6">
+<button
+  popovertarget="settings"
+  class="justify-self-end pr-8 pt-2.5 cursor-pointer"
+  ><Settings color="white" /></button
+>
+<Popup popupId="settings" bind:quotes />
+
+<h1 class="text-white font-extrabold place-self-center text-3xl">
   Closing Price Generator
 </h1>
-<main class="grid place-content-center grid-rows-[3em_1fr] p-4 gap-4">
+<main
+  class="justify-self-center grid place-content-center grid-rows-[3em_1fr] p-4 gap-6 w-sm"
+>
   <div class="flex justify-center">
-    {#if fetching}
+    {#if loading}
       <span class="loading loading-spinner loading-md"></span>
     {:else if isBot === 'true'}
       <p>
@@ -68,14 +80,12 @@
   </div>
 
   <div class="flex justify-center">
-    {#if showLink}
-      <p class="text-white">
-        press <a
-          href={url}
-          download="closing-price.xlsx"
-          class="text-white underline">here</a
-        > if download doesn't start automatically
-      </p>
-    {/if}
+    <p class="text-white" hidden={!showLink}>
+      press <a
+        href={url}
+        download="closing-price.xlsx"
+        class="text-white underline">here</a
+      > if download doesn't start automatically
+    </p>
   </div>
 </main>

@@ -1,30 +1,16 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import {
-  array,
-  minLength,
-  number,
-  object,
-  pipe,
-  safeParse,
-  string,
-} from 'valibot';
+import { safeParse } from 'valibot';
 import { getCurrentStockPrices } from '$lib/server/stock';
 import writeExcelFile from 'write-excel-file/universal';
 import { Temporal } from 'temporal-polyfill-lite';
-
-const SymbolSchema = array(
-  object({
-    quote: pipe(string(), minLength(7)),
-    name: number(),
-  }),
-);
+import { SymbolsSchema } from '$lib/schema';
 
 export const POST: RequestHandler = async ({ request, platform }) => {
   const {
     output: symbols,
     success,
     issues,
-  } = safeParse(SymbolSchema, await request.json());
+  } = safeParse(SymbolsSchema, await request.json());
   if (!success) {
     console.log(issues);
     return error(422, {
