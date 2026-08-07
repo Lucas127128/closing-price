@@ -1,4 +1,38 @@
-import { query } from '$app/server';
+import { getRequestEvent, query } from '$app/server';
+import { SymbolsSchema } from '$lib/schema';
+import { getCurrentStockPrices } from '$lib/server/stock';
+import { Temporal } from 'temporal-polyfill-lite';
+import { writeCsv } from 'hucre/csv';
+
+export const getCsv = query(SymbolsSchema, async (symbols) => {
+  const { platform } = getRequestEvent();
+  const prices = await getCurrentStockPrices(
+    symbols.map((symbol) => ({ symbol: symbol.quote, name: symbol.name })),
+  );
+  const timeZone =
+    platform?.cf?.timezone ??
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = Temporal.Now.zonedDateTimeISO().withTimeZone(timeZone);
+  const time = date.toLocaleString('en-US', {
+    hour12: false,
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+
+  const data = prices.map((price, index) => {
+    if (index === 0) {
+      return [price.name, price.price, time];
+    } else {
+      return [price.name, price.price];
+    }
+  });
+  data.unshift(['symbol', 'price', 'time']);
+  return writeCsv(data);
+});
 
 export const getQuotes = query(() => [
   { quote: '0001.HK', name: 1 },

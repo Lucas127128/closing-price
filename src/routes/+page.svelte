@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { getQuotes } from './stock.remote';
+  import { getQuotes, getCsv } from './stock.remote';
   import Cap from 'cap-widget';
   import { cleanupDB } from './cleanup.remote';
   import Button from '$lib/components/Button.svelte';
@@ -25,18 +25,14 @@
   });
 
   $effect(() => {
-    if (isBot === 'false')
-      fetch('/api/stockPrice', {
-        method: 'POST',
-        body: JSON.stringify(quotes),
-      })
-        .then((response) => response.text())
-        .then((text) => new Blob([text]))
-        .then((blob) => {
-          url = URL.createObjectURL(blob);
+    if (isBot === 'false') {
+      getCsv(quotes)
+        .then((csv) => {
+          url = URL.createObjectURL(new Blob([csv]));
           loading = false;
         })
         .catch((err) => console.error(err));
+    }
   });
 
   const downloadOnClick = () => {
