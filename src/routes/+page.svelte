@@ -58,9 +58,7 @@
 <h1 class="text-white font-extrabold place-self-center text-3xl">
   Closing Price Generator
 </h1>
-<main
-  class="justify-self-center grid place-content-center grid-rows-[3em_1fr] p-4 gap-6 w-sm"
->
+<main class="grid grid-rows-[3em_3em_3em_1fr] p-4 gap-6">
   <div class="flex justify-center">
     {#if loading}
       <span class="loading loading-spinner loading-md"></span>
@@ -72,18 +70,42 @@
       </p>
     {:else}
       <a href={url} download="closing-price.csv" class="text-white"
-        ><Button {downloadOnClick} {buttonText} /></a
+        ><Button onclick={downloadOnClick} {buttonText} /></a
       >
     {/if}
   </div>
 
+  {let showStocks = $state(false)}
   <div class="flex justify-center">
-    <p class="text-white" hidden={!showLink}>
-      press <a
-        href={url}
-        download="closing-price.xlsx"
-        class="text-white underline">here</a
-      > if download doesn't start automatically
-    </p>
+    {let buttonText = $state('Show stocks')}
+    <button
+      class="min-w-56 bg-[#202f34] hover:bg-[oklab(0.7161_-0.141281_-0.00471642)] pl-4 pr-4 text-accent hover:text-black rounded-xl cursor-pointer"
+      onclick={() => {
+        showStocks = !showStocks;
+        buttonText = showStocks ? 'Hide stocks' : 'Show stocks';
+      }}>{buttonText}</button
+    >
+  </div>
+
+  <div class="flex justify-center">
+    {#if showLink}
+      <p class="text-white">
+        press <a
+          href={url}
+          download="closing-price.xlsx"
+          class="text-white underline">here</a
+        > if download doesn't start automatically
+      </p>
+    {/if}
+  </div>
+
+  <div
+    class="grid grid-cols-[repeat(auto-fill,minmax(4em,1fr))] gap-4 p-9"
+  >
+    {#if showStocks}
+      {#each quotes as { quote }}
+        <span class="text-white">{quote}</span>
+      {/each}
+    {/if}
   </div>
 </main>

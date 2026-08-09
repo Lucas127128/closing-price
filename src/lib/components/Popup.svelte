@@ -30,6 +30,25 @@
       placeholder="1"
       class="pr-3 pl-3 border-accent border outline-none rounded-sm min-w-20"
       bind:value={stock.name}
+      onkeyup={() => {
+        switch (stock.name.length) {
+          case 0:
+            stock.quote = '';
+            break;
+          case 1:
+            stock.quote = `000${stock.name}.HK`;
+            break;
+          case 2:
+            stock.quote = `00${stock.name}.HK`;
+            break;
+          case 3:
+            stock.quote = `0${stock.name}.HK`;
+            break;
+          case 4:
+            stock.quote = `${stock.name}.HK`;
+            break;
+        }
+      }}
     />
     <span class="text-lg self-center">Symbol</span>
     <input
