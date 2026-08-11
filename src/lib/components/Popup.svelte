@@ -4,14 +4,12 @@
   let {
     popupId,
     quotes = $bindable(),
-    loading = $bindable(),
   }: {
     popupId: string;
     quotes: {
       quote: string;
       name: number;
     }[];
-    loading: boolean;
   } = $props();
   const stock = $state({ quote: '', name: '' });
 </script>
@@ -74,7 +72,6 @@
           quote: stock.quote,
         });
         if (success) {
-          loading = true;
           quotes.push(output);
           quotes.sort((a, b) => a.name - b.name);
           stock.name = '';
