@@ -26,6 +26,8 @@ jobs:
         env:
           CAP_JS_SECRET: ${{ secrets.CAP_JS_SECRET }}
           CF_WEB_ANALYTICS_TOKEN: ${{ secrets.CF_WEB_ANALYTICS_TOKEN }}
+          USER_PW_HASH: ${{ secrets.USER_PW_HASH }}
+          SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
       - name: Deploy
         run: bunx wrangler versions upload
         env:
