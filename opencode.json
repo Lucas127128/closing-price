@@ -19,7 +19,7 @@
     "*": "ask",
     "bash": {
       "*": "ask",
-      "git *": "deny",
+      "git *": "ask",
       "rm *": "deny",
       "chmod *": "deny",
       "grep *": "allow",

@@ -24,3 +24,5 @@ vite.config.ts.timestamp-*
 
 .agents/skills
 output-check
+
+.opencode/goals
