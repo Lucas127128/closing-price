@@ -1,6 +1,6 @@
 import { SESSION_TOKEN, USER_PW_HASH } from '$app/env/private';
 import { form, getRequestEvent, command } from '$app/server';
-import { LoginSchema } from '$lib/schema';
+import { LoginSchema } from '#lib/schema.js';
 import { redirect } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 

@@ -1,4 +1,5 @@
 import type { D1Database } from '@cloudflare/workers-types';
+import '@sveltejs/adapter-cloudflare';
 
 declare global {
   namespace App {

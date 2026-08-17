@@ -1,6 +1,6 @@
 <script>
-  import { LoginSchema } from '$lib/schema';
-  import { loginForm } from '$lib/auth.remote';
+  import { LoginSchema } from '#lib/schema.js';
+  import { loginForm } from '#lib/auth.remote.js';
   import { onMount } from 'svelte';
   import Cap from 'cap-widget';
   import { cleanupDB } from '../cleanup.remote';

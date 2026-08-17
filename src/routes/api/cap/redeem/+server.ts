@@ -1,5 +1,5 @@
 import { validateChallenge } from 'capjs-core';
-import { error, json } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import '../../../../../.svelte-kit/env.d.ts';
 import { CAP_JS_SECRET } from '$app/env/private';
 import type { RequestHandler } from './$types';
@@ -51,5 +51,5 @@ export const POST: RequestHandler = async ({ request, platform }) => {
       .run()
       .catch((err: unknown) => console.error(err));
   }
-  return json(result);
+  return Response.json(result);
 };

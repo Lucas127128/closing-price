@@ -62,7 +62,7 @@ export const getCurrentStockPrices = async (
   stocks: { symbol: string; name: number }[],
 ) => {
   const { fail, cookies } = await getCookies();
-  if (fail) return error(500, { message: 'external service error' });
+  if (fail) return error(500, 'external service error');
 
   const crumbValue = await getCrumb(cookies!);
   const symbols = stocks.map(({ symbol }) => symbol).join(',');
@@ -76,7 +76,7 @@ export const getCurrentStockPrices = async (
   });
   if (!response.ok) {
     console.log(`Yahoo Finance API responded ${response.status}`);
-    return error(500, { message: 'external service error' });
+    return error(500, 'external service error');
   }
   const { quoteResponse } = (await response.json()) as {
     quoteResponse?: {
@@ -95,7 +95,7 @@ export const getCurrentStockPrices = async (
 
   if (!success) {
     console.log(issues);
-    return error(500, { message: 'external service error' });
+    return error(500, 'external service error');
   } else {
     return output;
   }

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { getQuotes } from './stock.remote';
   import Settings from '@lucide/svelte/icons/settings';
-  import Popup from '$lib/components/Popup.svelte';
-  import DownloadButton from '$lib/components/DownloadButton.svelte';
-  import { logout } from '$lib/auth.remote';
+  import Popup from '#lib/components/Popup.svelte';
+  import DownloadButton from '#lib/components/DownloadButton.svelte';
+  import { logout } from '#lib/auth.remote.js';
   import { goto } from '$app/navigation';
 
   // eslint-disable-next-line

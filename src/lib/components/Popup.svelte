@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SymbolSchema } from '$lib/schema';
+  import { SymbolSchema } from '#lib/schema.js';
   import { safeParse } from 'valibot';
   let {
     popupId,

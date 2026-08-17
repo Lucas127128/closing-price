@@ -1,4 +1,3 @@
-import { json } from '@sveltejs/kit';
 import { generateChallenge, generateRswKeypair } from 'capjs-core';
 import '../../../../../.svelte-kit/env.d.ts';
 import { CAP_JS_SECRET } from '$app/env/private';
@@ -14,5 +13,5 @@ export async function POST() {
       blockAutomatedBrowsers: true,
     },
   });
-  return json(challenge);
+  return Response.json(challenge);
 }

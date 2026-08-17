@@ -1,6 +1,6 @@
 import { getRequestEvent, query } from '$app/server';
-import { SymbolsSchema } from '$lib/schema';
-import { getCurrentStockPrices } from '$lib/server/stock';
+import { SymbolsSchema } from '#lib/schema.js';
+import { getCurrentStockPrices } from '#lib/server/stock.js';
 import { Temporal } from 'temporal-polyfill-lite';
 import { writeCsv } from 'hucre/csv';
 

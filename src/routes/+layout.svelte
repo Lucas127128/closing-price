@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { CF_WEB_ANALYTICS_TOKEN } from '$app/env/public';
-  import favicon from '$lib/assets/favicon.svg';
+  import favicon from '#lib/assets/favicon.svg';
   import '../app.css';
 
   const { children } = $props();

@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "imports": {
+    "#lib": "./src/lib/index.js",
+    "#lib/*": "./src/lib/*"
+  },
   "scripts": {
     "dev": "bunx -b vite dev",
     "build": "vite build",
@@ -28,8 +32,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260801.1",
-    "@sveltejs/adapter-cloudflare": "^7.2.9",
-    "@sveltejs/kit": "^2.70.2",
+    "@sveltejs/adapter-cloudflare": "8.0.0-next.6",
+    "@sveltejs/kit": "3.0.0-next.23",
     "@tailwindcss/vite": "^4.3.3",
     "bundle-analyzer": "^0.0.6",
     "eslint-plugin-svelte": "^3.22.0",
@@ -38,7 +42,7 @@
     "oxlint": "^1.76.0",
     "oxlint-tsgolint": "^7.0.2001",
     "svelte": "^5.56.8",
-    "svelte-check": "^4.7.4",
+    "svelte-check": "^4.7.5",
     "typescript": "^6.0.1",
     "vite": "^8.2.0",
     "vitest": "^4.1.10",
