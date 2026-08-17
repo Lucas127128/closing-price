@@ -67,7 +67,6 @@ export const getCurrentStockPrices = async (
   const crumbValue = await getCrumb(cookies!);
   const symbols = stocks.map(({ symbol }) => symbol).join(',');
   const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&crumb=${encodeURIComponent(crumbValue!)}`;
-  console.log(cookies);
   const response = await fetch(url, {
     headers: {
       'User-Agent': USER_AGENT,

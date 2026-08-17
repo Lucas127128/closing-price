@@ -3,10 +3,8 @@
 
   const {
     quotes,
-    isBot,
   }: {
     quotes: { quote: string; name: number }[];
-    isBot: 'true' | 'false' | 'validating';
   } = $props();
 
   // eslint-disable-next-line
@@ -20,13 +18,7 @@
   {#snippet pending()}
     <span class="loading loading-spinner loading-md"></span>
   {/snippet}
-  {#if isBot === 'true'}
-    <p>
-      You are detected as bot. Please <a href="/" class="underline"
-        >reload</a
-      > to try again
-    </p>
-  {:else if $effect.pending()}
+  {#if $effect.pending()}
     <span class="loading loading-spinner loading-md"></span>
   {:else}
     <a href={url} download="closing-price.csv" class="text-white"

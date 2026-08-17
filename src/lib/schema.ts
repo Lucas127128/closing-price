@@ -29,4 +29,8 @@ export const LoginSchema = object({
     pipe(string(), minLength(1)),
     'Password must be at least 1 character',
   ),
+  capToken: message(
+    pipe(string(), minLength(1)),
+    'You must not skip any steps in our website',
+  ),
 });

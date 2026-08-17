@@ -1,28 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { getQuotes } from './stock.remote';
-  import { cleanupDB } from './cleanup.remote';
-
-  import Cap from 'cap-widget';
-
   import Settings from '@lucide/svelte/icons/settings';
   import Popup from '$lib/components/Popup.svelte';
   import DownloadButton from '$lib/components/DownloadButton.svelte';
   import { logout } from '$lib/auth.remote';
   import { goto } from '$app/navigation';
 
-  let isBot = $state<'validating' | 'true' | 'false'>('validating');
   // eslint-disable-next-line
   let quotes = $state(await getQuotes());
-
-  onMount(async () => {
-    const cap = new Cap({ apiEndpoint: '/api/cap' });
-    Promise.resolve()
-      .then(() => cleanupDB())
-      .catch((err) => console.error(err));
-    const { token, success } = await cap.solve();
-    isBot = success ? 'false' : 'true';
-  });
 </script>
 
 <div
@@ -51,7 +36,7 @@
   </h1>
   <main class="grid grid-rows-[3em_3em_1fr] p-4 gap-6">
     <div class="flex justify-center">
-      <DownloadButton {quotes} {isBot} />
+      <DownloadButton {quotes} />
     </div>
 
     {let showStocks = $state(false)}

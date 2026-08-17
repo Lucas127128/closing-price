@@ -30,5 +30,6 @@
   }
   :global(html) {
     background-color: #16171d;
+    scrollbar-width: none;
   }
 </style>
