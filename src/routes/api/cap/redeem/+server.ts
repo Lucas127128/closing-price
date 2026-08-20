@@ -46,10 +46,7 @@ export const POST: RequestHandler = async ({ request, platform }) => {
     const insertTokensQuery = D1.prepare(
       'INSERT INTO cap_tokens (token, expires_at) VALUES (?, ?)',
     );
-    insertTokensQuery
-      .bind(result.token, expiresTime)
-      .run()
-      .catch((err: unknown) => console.error(err));
+    await insertTokensQuery.bind(result.token, expiresTime).run();
   }
   return Response.json(result);
 };
