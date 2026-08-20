@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@lucide/svelte": "^1.28.0",
+    "@tanstack/svelte-query": "^6.1.38",
     "bcryptjs": "^3.0.3",
     "cap-widget": "^0.1.56",
     "capjs-core": "^0.1.1",

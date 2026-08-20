@@ -31,7 +31,7 @@ export const getCsv = query(SymbolsSchema, async (symbols) => {
     }
   });
   data.unshift(['symbol', 'price', 'time']);
-  return writeCsv(data);
+  return '\u00EF\u00BB\u00BF' + writeCsv(data);
 });
 
 export const getQuotes = query(() => [

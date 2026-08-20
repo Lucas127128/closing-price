@@ -3,9 +3,14 @@
   import { CF_WEB_ANALYTICS_TOKEN } from '$app/env/public';
   import favicon from '#lib/assets/favicon.svg';
   import '../app.css';
+  import {
+    QueryClient,
+    QueryClientProvider,
+  } from '@tanstack/svelte-query';
 
   const { children } = $props();
   const cfBeacon = { token: CF_WEB_ANALYTICS_TOKEN };
+  const queryClient = new QueryClient();
 </script>
 
 <svelte:head>
@@ -21,7 +26,9 @@
   {/if}
 </svelte:head>
 
-{@render children()}
+<QueryClientProvider client={queryClient}>
+  {@render children()}
+</QueryClientProvider>
 
 <style>
   :global(body) {
