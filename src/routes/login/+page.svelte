@@ -7,6 +7,11 @@
 
   let validated = $state(false);
   let capToken = $state('');
+  let loading = $state(false);
+
+  $effect(() => {
+    if (loginForm.result?.fail) loading = false;
+  });
 
   onMount(async () => {
     const cap = new Cap({ apiEndpoint: '/api/cap' });
@@ -33,6 +38,7 @@
       <form
         {...loginForm.preflight(LoginSchema)}
         oninput={() => loginForm.validate()}
+        onsubmit={() => (loading = true)}
       >
         <div class="grid grid-rows-[5em_5em_3em_2em] gap-5">
           <label
@@ -77,7 +83,8 @@
 
           <button
             class="justify-self-end bg-accent text-[#084d49] p-2 pr-6 pl-6 rounded-md cursor-pointer hover:bg-[oklab(0.7161_-0.141281_-0.00471642)]"
-            type="submit"
+            class:bg-gray-500={loading}
+            disabled={loading}
             >Login
           </button>
 
