@@ -69,7 +69,6 @@
               class="bg-inherit border-accent border outline-none p-2 rounded-sm ml-4 min-w-40"
               class:border-error={loginForm.fields.password.issues()}
               placeholder="Password"
-              type="password"
               autocomplete="current-password"
               oninput={() => loginForm.validate()}
             />
