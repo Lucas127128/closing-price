@@ -68,11 +68,17 @@ export const getCurrentStockPrices = async (
   stocks: { symbol: string; name: number }[],
 ) => {
   const { fail, cookies } = await getCookies();
-  if (fail) return error(500, 'external service error');
+  if (fail) {
+    console.log('cookies fail');
+    return error(500, 'external service error: cookies fail');
+  }
 
   const crumbValue = await getCrumb(cookies!);
+  if (crumbValue === null) {
+    return error(500, 'external service error: crumb fail');
+  }
   const symbols = stocks.map(({ symbol }) => symbol).join(',');
-  const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&crumb=${encodeURIComponent(crumbValue!)}`;
+  const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&crumb=${encodeURIComponent(crumbValue)}`;
   const response = await fetch(url, {
     headers: {
       'User-Agent': USER_AGENT,
