@@ -1,6 +1,5 @@
 import { validateChallenge } from 'capjs-core';
 import { error } from '@sveltejs/kit';
-import '../../../../../.svelte-kit/env.d.ts';
 import { CAP_JS_SECRET } from '$app/env/private';
 import type { RequestHandler } from './$types';
 import { Temporal } from 'temporal-polyfill-lite';
