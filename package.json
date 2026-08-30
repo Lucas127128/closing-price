@@ -26,6 +26,7 @@
     "capjs-core": "^0.1.2",
     "comptime": "^0.1.0",
     "daisyui": "^5.7.17",
+    "evlog": "^2.27.1",
     "hucre": "^1.1.0",
     "p-memoize": "^8.0.0",
     "quick-lru": "^7.3.0",
@@ -35,8 +36,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260818.1",
-    "@sveltejs/adapter-cloudflare": "8.0.0-next.6",
-    "@sveltejs/kit": "3.0.0-next.23",
+    "@sveltejs/adapter-cloudflare": "^8.0.0-next.6",
+    "@sveltejs/kit": "^3.0.0-next.25",
     "@tailwindcss/vite": "^4.3.3",
     "bundle-analyzer": "^0.0.6",
     "eslint-plugin-svelte": "^3.23.0",

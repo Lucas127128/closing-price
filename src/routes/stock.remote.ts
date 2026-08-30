@@ -2,7 +2,6 @@ import { getRequestEvent, query } from '$app/server';
 import { SymbolsSchema } from '#lib/schema.js';
 import { getCurrentStockPrices } from '#lib/server/stock.js';
 import { Temporal } from 'temporal-polyfill-lite';
-import { writeCsv } from 'hucre/csv';
 import { minLength, pipe } from 'valibot';
 
 export const getTimeString = query(() => {
@@ -33,36 +32,6 @@ export const getStockPrice = query(
     );
   },
 );
-
-export const getCsv = query(SymbolsSchema, async (symbols) => {
-  const { platform } = getRequestEvent();
-  const prices = await getCurrentStockPrices(
-    symbols.map((symbol) => ({ symbol: symbol.quote, name: symbol.name })),
-  );
-  const timeZone =
-    platform?.cf?.timezone ??
-    Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const date = Temporal.Now.zonedDateTimeISO().withTimeZone(timeZone);
-  const time = date.toLocaleString('en-US', {
-    hour12: false,
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-  });
-
-  const data = prices.map((price, index) => {
-    if (index === 0) {
-      return [price.name, price.price, time];
-    } else {
-      return [price.name, price.price];
-    }
-  });
-  data.unshift(['symbol', 'price', 'time']);
-  return '\u00EF\u00BB\u00BF' + writeCsv(data);
-});
 
 export const getQuotes = query(() => [
   { quote: '0001.HK', name: 1 },

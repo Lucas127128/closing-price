@@ -3,11 +3,13 @@ import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { comptime } from 'comptime/vite';
+import evlog from 'evlog/vite';
 
 export default defineConfig({
   css: {
     transformer: 'lightningcss',
   },
+  logLevel: 'warn',
   plugins: [
     comptime(),
     tailwindcss({ optimize: true }),
@@ -25,6 +27,9 @@ export default defineConfig({
         remoteFunctions: true,
         forkPreloads: true,
       },
+    }),
+    evlog({
+      service: 'closing-price',
     }),
   ],
 });

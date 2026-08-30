@@ -1,5 +1,6 @@
 import { number, safeParse, array, object } from 'valibot';
 import { error } from '@sveltejs/kit';
+import { useLogger } from 'evlog/sveltekit';
 // import pMemoize from 'p-memoize';
 // import QuickLRU from 'quick-lru';
 
@@ -67,15 +68,17 @@ async function getCrumb(cookies: Record<string, string>) {
 export const getCurrentStockPrices = async (
   stocks: { symbol: string; name: number }[],
 ) => {
+  const log = useLogger();
   const { fail, cookies } = await getCookies();
   if (fail) {
-    console.log('cookies fail');
-    return error(500, 'external service error: cookies fail');
+    log.error(new Error('Cannot get cookies'));
+    return error(500, 'external service error: cannot get cookies');
   }
 
   const crumbValue = await getCrumb(cookies!);
   if (crumbValue === null) {
-    return error(500, 'external service error: crumb fail');
+    log.error(new Error('Cannot get crumb'));
+    return error(500, 'external service error: cannot get crumb');
   }
   const symbols = stocks.map(({ symbol }) => symbol).join(',');
   const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&crumb=${encodeURIComponent(crumbValue)}`;
@@ -87,8 +90,8 @@ export const getCurrentStockPrices = async (
     },
   });
   if (!response.ok) {
-    console.log(`Yahoo Finance API responded ${response.status}`);
-    console.log(await response.json());
+    log.error(new Error(`Yahoo Finance API responded ${response.status}`));
+    log.set({ errorResponse: await response.json() });
     return error(500, 'external service error');
   }
   const { quoteResponse } = (await response.json()) as {
@@ -107,7 +110,8 @@ export const getCurrentStockPrices = async (
   );
 
   if (!success) {
-    console.log(issues);
+    log.error(new Error('Failed to parse prices'));
+    log.set({ pricesValidation: { issues } });
     return error(500, 'external service error');
   } else {
     return output;
