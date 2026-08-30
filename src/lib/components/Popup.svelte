@@ -1,15 +1,27 @@
 <script lang="ts">
   import { SymbolSchema } from '#lib/schema.js';
   import { safeParse } from 'valibot';
+  import type { CreateMutationResult } from '@tanstack/svelte-query';
+
   let {
     popupId,
     quotes = $bindable(),
+    csvUrl,
   }: {
     popupId: string;
     quotes: {
       quote: string;
       name: number;
     }[];
+    csvUrl: CreateMutationResult<
+      string,
+      Error,
+      {
+        quote: string;
+        name: number;
+      }[],
+      unknown
+    >;
   } = $props();
   const stock = $state({ quote: '', name: '' });
 </script>
@@ -78,6 +90,7 @@
           stock.quote = '';
           document.querySelector('dialog')?.close();
         }
+        csvUrl.mutate(quotes);
       }}>Add</button
     >
   </div>

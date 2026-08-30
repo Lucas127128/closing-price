@@ -1,5 +1,7 @@
 import { number, safeParse, array, object } from 'valibot';
 import { error } from '@sveltejs/kit';
+import pMemoize from 'p-memoize';
+import QuickLRU from 'quick-lru';
 
 const PricesSchema = array(object({ price: number(), name: number() }));
 
@@ -58,13 +60,17 @@ async function getCrumb(cookies: Record<string, string>) {
   return null;
 }
 
+const memoizedGetCrumb = pMemoize(getCrumb, {
+  cache: new QuickLRU({ maxAge: 1000 * 60, maxSize: 500 }),
+});
+
 export const getCurrentStockPrices = async (
   stocks: { symbol: string; name: number }[],
 ) => {
   const { fail, cookies } = await getCookies();
   if (fail) return error(500, 'external service error');
 
-  const crumbValue = await getCrumb(cookies!);
+  const crumbValue = await memoizedGetCrumb(cookies!);
   const symbols = stocks.map(({ symbol }) => symbol).join(',');
   const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols)}&crumb=${encodeURIComponent(crumbValue!)}`;
   const response = await fetch(url, {
@@ -76,6 +82,7 @@ export const getCurrentStockPrices = async (
   });
   if (!response.ok) {
     console.log(`Yahoo Finance API responded ${response.status}`);
+    console.log(await response.json());
     return error(500, 'external service error');
   }
   const { quoteResponse } = (await response.json()) as {

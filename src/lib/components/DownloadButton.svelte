@@ -1,40 +1,30 @@
 <script lang="ts">
-  import { createQuery, createMutation } from '@tanstack/svelte-query';
-  import { getCsv } from '../../routes/stock.remote';
-  import { onDestroy } from 'svelte';
+  import type { CreateMutationResult } from '@tanstack/svelte-query';
 
   const {
-    quotes,
+    csvUrl,
   }: {
-    quotes: { quote: string; name: number }[];
+    csvUrl: CreateMutationResult<
+      string,
+      Error,
+      {
+        quote: string;
+        name: number;
+      }[],
+      unknown
+    >;
   } = $props();
 
   // eslint-disable-next-line
   let buttonText = $state('Download Spreadsheet');
-  let currentUrl = $state('');
-
-  const query = createQuery(() => ({
-    queryKey: ['csv', quotes],
-    staleTime: 30 * 1000,
-    queryFn: async () => {
-      if (currentUrl) URL.revokeObjectURL(currentUrl);
-      const url = URL.createObjectURL(new Blob([await getCsv(quotes)]));
-      currentUrl = url;
-      return url;
-    },
-    experimental_prefetchInRender: true,
-  }));
-  onDestroy(() => {
-    if (currentUrl) URL.revokeObjectURL(currentUrl);
-  });
 </script>
 
-{#if query.isPending}
+{#if csvUrl.isPending}
   <span class="loading loading-spinner loading-md"></span>
-{:else if query.isError}
-  <span class="text-error">Internal error: {query.error.message}</span>
+{:else if csvUrl.isError}
+  <span class="text-error">Internal error: {csvUrl.error.message}</span>
 {:else}
-  <a href={query.data} download="closing-price.csv" class="text-white">
+  <a href={csvUrl.data} download="closing-price.csv" class="text-white">
     <button
       onclick={() => {
         setTimeout(() => {

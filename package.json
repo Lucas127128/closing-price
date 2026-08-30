@@ -27,6 +27,8 @@
     "comptime": "^0.1.0",
     "daisyui": "^5.7.17",
     "hucre": "^1.1.0",
+    "p-memoize": "^8.0.0",
+    "quick-lru": "^7.3.0",
     "tailwindcss": "^4.3.3",
     "temporal-polyfill-lite": "^0.4.2",
     "valibot": "^1.4.2"

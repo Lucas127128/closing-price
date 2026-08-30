@@ -6,8 +6,66 @@
   import { logout } from '#lib/auth.remote.js';
   import { goto } from '$app/navigation';
 
+  import { createMutation } from '@tanstack/svelte-query';
+  import { onDestroy } from 'svelte';
+  import { getStockPrice, getTimeString } from './stock.remote';
+
+  import { writeCsv } from 'hucre/csv';
+
+  let currentUrl = $state('');
+  let currentQuotes: { quote: string; name: number }[] = $state([]);
+  let currentPrices = $state<{ price: number; name: number }[]>([]);
+
   // eslint-disable-next-line
   let quotes = $state(await getQuotes());
+
+  const csvUrl = createMutation(() => ({
+    staleTime: 30 * 1000,
+    mutationFn: async (quotes: { quote: string; name: number }[]) => {
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      const toAddQuotes = quotes.filter(
+        (item) => !currentQuotes.find((quote) => quote.name === item.name),
+      );
+      const toRemoveQuotes = currentQuotes.filter(
+        (item) => !quotes.find((quote) => quote.name === item.name),
+      );
+      const prices = currentPrices.filter(
+        (price) =>
+          !toRemoveQuotes.find(
+            (toRemoveQuote) => toRemoveQuote.name === price.name,
+          ),
+      );
+      if (toAddQuotes.length > 0) {
+        const toAddedPrices = await getStockPrice(toAddQuotes);
+        for (const toAddedPrice of toAddedPrices) {
+          prices.push(toAddedPrice);
+        }
+        prices.sort((a, b) => a.name - b.name);
+      }
+
+      currentQuotes = [...quotes];
+      currentPrices = [...prices];
+      const time = await getTimeString();
+      const data = prices.map((price, index) => {
+        if (index === 0) {
+          return [price.name, price.price, time];
+        } else {
+          return [price.name, price.price];
+        }
+      });
+      data.unshift(['symbol', 'price', 'time']);
+      const csv = '\u00EF\u00BB\u00BF' + writeCsv(data);
+      const url = URL.createObjectURL(new Blob([csv]));
+      currentUrl = url;
+      return url;
+    },
+    experimental_prefetchInRender: true,
+  }));
+  csvUrl.mutate(quotes);
+
+  onDestroy(() => {
+    if (currentUrl) URL.revokeObjectURL(currentUrl);
+  });
 </script>
 
 <div
@@ -29,14 +87,14 @@
     >
   </div>
 
-  <Popup popupId="settings" bind:quotes />
+  <Popup popupId="settings" {csvUrl} {quotes} />
 
   <h1 class="text-white font-extrabold place-self-center text-3xl">
     Closing Price Generator
   </h1>
   <main class="grid grid-rows-[3em_3em_1fr] p-4 gap-6">
     <div class="flex justify-center">
-      <DownloadButton {quotes} />
+      <DownloadButton {csvUrl} />
     </div>
 
     {let showStocks = $state(false)}

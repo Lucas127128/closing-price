@@ -3,6 +3,36 @@ import { SymbolsSchema } from '#lib/schema.js';
 import { getCurrentStockPrices } from '#lib/server/stock.js';
 import { Temporal } from 'temporal-polyfill-lite';
 import { writeCsv } from 'hucre/csv';
+import { minLength, pipe } from 'valibot';
+
+export const getTimeString = query(() => {
+  const { platform } = getRequestEvent();
+  const timeZone =
+    platform?.cf?.timezone ??
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = Temporal.Now.zonedDateTimeISO().withTimeZone(timeZone);
+  return date.toLocaleString('en-US', {
+    hour12: false,
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+});
+
+export const getStockPrice = query(
+  pipe(SymbolsSchema, minLength(1)),
+  async (symbols) => {
+    return await getCurrentStockPrices(
+      symbols.map((symbol) => ({
+        symbol: symbol.quote,
+        name: symbol.name,
+      })),
+    );
+  },
+);
 
 export const getCsv = query(SymbolsSchema, async (symbols) => {
   const { platform } = getRequestEvent();
