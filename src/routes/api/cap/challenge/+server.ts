@@ -1,5 +1,4 @@
 import { generateChallenge, generateRswKeypair } from 'capjs-core';
-import '../../../../../.svelte-kit/env.d.ts';
 import { CAP_JS_SECRET } from '$app/env/private';
 import { comptime } from 'comptime';
 
