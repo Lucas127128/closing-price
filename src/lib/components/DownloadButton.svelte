@@ -1,18 +1,10 @@
 <script lang="ts">
-  import type { CreateMutationResult } from '@tanstack/svelte-query';
+  import type { CreateQueryResult } from '@tanstack/svelte-query';
 
   const {
     csvUrl,
   }: {
-    csvUrl: CreateMutationResult<
-      string,
-      Error,
-      {
-        quote: string;
-        name: number;
-      }[],
-      unknown
-    >;
+    csvUrl: CreateQueryResult<string, Error>;
   } = $props();
 
   // eslint-disable-next-line

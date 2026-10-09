@@ -6,27 +6,28 @@
   import { logout } from '#lib/auth.remote.js';
   import { goto } from '$app/navigation';
 
-  import { createMutation } from '@tanstack/svelte-query';
+  import { createQuery } from '@tanstack/svelte-query';
   import { onDestroy } from 'svelte';
   import { getStockPrice, getTimeString } from './stock.remote';
 
   import { writeCsv } from 'hucre/csv';
 
   let currentUrl = $state('');
-  let currentQuotes: { quote: string; name: number }[] = $state([]);
+  let previousQuotes: { quote: string; name: number }[] = $state([]);
   let currentPrices = $state<{ price: number; name: number }[]>([]);
 
   // eslint-disable-next-line
   let quotes = $state(await getQuotes());
 
-  const csvUrl = createMutation(() => ({
+  const csvUrl = createQuery(() => ({
+    queryKey: ['csvUrl', quotes],
     staleTime: 30 * 1000,
-    mutationFn: async (quotes: { quote: string; name: number }[]) => {
+    queryFn: async () => {
       if (currentUrl) URL.revokeObjectURL(currentUrl);
       const toAddQuotes = quotes.filter(
-        (item) => !currentQuotes.find((quote) => quote.name === item.name),
+        (item) => !currentPrices.find((quote) => quote.name === item.name),
       );
-      const toRemoveQuotes = currentQuotes.filter(
+      const toRemoveQuotes = previousQuotes.filter(
         (item) => !quotes.find((quote) => quote.name === item.name),
       );
       const prices = currentPrices.filter(
@@ -43,7 +44,7 @@
         prices.sort((a, b) => a.name - b.name);
       }
 
-      currentQuotes = [...quotes];
+      previousQuotes = [...quotes];
       currentPrices = [...prices];
       const time = await getTimeString();
       const data = prices.map((price, index) => {
@@ -61,7 +62,6 @@
     },
     experimental_prefetchInRender: true,
   }));
-  csvUrl.mutate(quotes);
 
   onDestroy(() => {
     if (currentUrl) URL.revokeObjectURL(currentUrl);
